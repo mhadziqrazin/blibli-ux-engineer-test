@@ -1,8 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Card from "./components/Card.vue"
+</script>
 
 <template>
   <main>
-    halo
+    <Card
+      title="NIKE AJ1 Retro High White University Blue Black"
+      price=3550000
+      img= "public/assets/nike.png"
+    />
   </main>
 </template>
 
