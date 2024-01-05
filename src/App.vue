@@ -6,19 +6,31 @@ const items = ref<HTMLElement | null>(null);
 const leftVis = ref(false);
 const rightVis = ref(false);
 const showFooter = ref(false);
+const topVis = ref(false);
+const main = ref<HTMLElement | null>(null);
 
-function scrollRight(event: MouseEvent) {
-  event.preventDefault();
+function scrollRight() {
   const items = document.querySelector(".items");
   if (!!items) items.scrollLeft += 30;
   updateButtonVis();
 }
 
-function scrollLeft(event: MouseEvent) {
-  event.preventDefault();
+function scrollLeft() {
   const items = document.querySelector(".items");
   if (!!items) items.scrollLeft -= 30;
   updateButtonVis();
+}
+
+function scrollTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function updateTopVis() {
+  const tres = 20;
+  topVis.value = window.scrollY > tres;
 }
 
 function updateButtonVis() {
@@ -32,14 +44,22 @@ function handleScroll() {
   updateButtonVis();
 }
 
+function handleScrollTop() {
+  updateTopVis();
+}
+
 onMounted(() => {
   updateButtonVis();
+  updateTopVis();
+  window.addEventListener('scroll', handleScrollTop, { passive: true });
+  window.addEventListener('touchmove', handleScrollTop, { passive: true });
   items.value?.addEventListener('scroll', handleScroll, { passive: true });
   items.value?.addEventListener('touchmove', handleScroll, { passive: true });
 });
 
 onUpdated(() => {
   updateButtonVis();
+  updateTopVis();
 });
 </script>
 
@@ -50,7 +70,7 @@ onUpdated(() => {
     </div>
   </nav>
 
-  <main>
+  <main ref="main">
     <section class="one-n-two">
       <div class="one box">
         1
@@ -67,21 +87,24 @@ onUpdated(() => {
     </section>
     <section class="container-items">
       <div class="items" ref="items">
-        <button v-show="leftVis" @click="scrollLeft" class="left scroll-btn">
+        <button v-show="leftVis" @click="scrollLeft" class="left scroll-btn util-btn">
           &lsaquo;
         </button>
-        <button v-show="rightVis" @click="scrollRight" class="right scroll-btn">
+        <button v-show="rightVis" @click="scrollRight" class="right scroll-btn util-btn">
           &rsaquo;
         </button>
         <Card
-          v-for="i in 7" :key="i"
+          v-for="i in 10" :key="i"
           title="NIKE AJ1 Retro High White University Blue Black"
           img= "/assets/nike.png"
-          price=3550000
+          :price=3550000
         />
       </div>
     </section>
   </main>
+  <button @click="scrollTop" v-show="topVis" class="scroll-top-btn util-btn">
+    &uarr;
+  </button>
   <footer>
     <p v-if="showFooter" class="container footer">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin mattis nibh ut tincidunt. Pellentesque eget gravida orci, eu rhoncus mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed eget risus urna. Aenean non lectus risus. Aenean ac sagittis libero, vel volutpat tellus. Mauris sit amet hendrerit velit. Vivamus nec consectetur dolor. Mauris porttitor lacinia velit, sit amet volutpat lacus euismod non. Vivamus laoreet malesuada purus, nec porta elit tincidunt sit amet. Praesent orci quam, laoreet in mi non, venenatis congue dui. Suspendisse non lacus eget massa pretium tincidunt id quis justo. Integer velit tortor, ultricies ac.
@@ -166,8 +189,11 @@ main {
 }
 
 @media (max-width: 640px) {
+  .four {
+    order: -1;
+  }
   .three {
-    order: 1;
+    order: 0;
   }
 
   .items {
@@ -187,9 +213,7 @@ button {
   cursor: pointer;
 }
 
-.scroll-btn {
-  position: absolute;
-  top: 50%;
+.util-btn {
   width: 40px;
   height: 40px;
   border: 0;
@@ -202,12 +226,23 @@ button {
   box-shadow: 1px 1px 5px 2px rgb(0 0 0 / 0.2);
 }
 
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+}
+
 .left {
   left: 20px;
 }
 
 .right {
   right: 20px;
+}
+
+.scroll-top-btn {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
 }
 
 footer {
