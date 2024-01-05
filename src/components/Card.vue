@@ -37,17 +37,28 @@ defineProps<{
 
 <style scoped>
 .card {
+<<<<<<< HEAD
   min-width: 182px;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 0 5px 0.5px rgb(0 0 0 / 0.2);
+=======
+  width: 182px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 8px 0.5px rgb(0 0 0 / 0.2);
+>>>>>>> 51dad921fdfa63b909240f4964d4e45521172542
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
 
 @media (max-width: 640px) {
   .card {
+<<<<<<< HEAD
     min-width: 132px;
+=======
+    width: 132px;
+>>>>>>> 51dad921fdfa63b909240f4964d4e45521172542
   }
 }
 
