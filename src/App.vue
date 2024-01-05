@@ -1,23 +1,5 @@
 <script setup lang="ts">
 import Card from "./components/Card.vue"
-
-const lazyImages = document.querySelectorAll(".lazy");
-// Create a new Intersection Observer
-const observer = new IntersectionObserver((entries, observer) => {
- entries.forEach((entry) => {
-  if (entry.isIntersecting) {
-   // Load the image when it comes into the viewport
-   const img: HTMLImageElement = entry.target;
-   const src = img.getAttribute("data-src");
-   img.src = src;
-   observer.unobserve(img); // Unobserve the image after it's loaded
-  }
- });
-});
-// Observe each lazy image
-lazyImages.forEach((image) => {
- observer.observe(image);
-});
 </script>
 
 <template>
