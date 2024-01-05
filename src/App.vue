@@ -5,6 +5,7 @@ import { onMounted, onUpdated, ref } from "vue"
 const items = ref<HTMLElement | null>(null);
 const leftVis = ref(false);
 const rightVis = ref(false);
+const showFooter = ref(false);
 
 function scrollRight(event: MouseEvent) {
   event.preventDefault();
@@ -67,26 +68,29 @@ onUpdated(() => {
     <section class="container-items">
       <div class="items" ref="items">
         <button v-show="leftVis" @click="scrollLeft" class="left scroll-btn">
-          <
+          &lsaquo;
         </button>
         <button v-show="rightVis" @click="scrollRight" class="right scroll-btn">
-          >
+          &rsaquo;
         </button>
         <Card
-        v-for="i in 7" :key="i"
-        title="NIKE AJ1 Retro High White University Blue Black"
-        img= "/assets/nike.png"
-        price=3550000
+          v-for="i in 7" :key="i"
+          title="NIKE AJ1 Retro High White University Blue Black"
+          img= "/assets/nike.png"
+          price=3550000
         />
       </div>
     </section>
   </main>
   <footer>
-    <p class="container">
+    <p v-if="showFooter" class="container footer">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin mattis nibh ut tincidunt. Pellentesque eget gravida orci, eu rhoncus mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed eget risus urna. Aenean non lectus risus. Aenean ac sagittis libero, vel volutpat tellus. Mauris sit amet hendrerit velit. Vivamus nec consectetur dolor. Mauris porttitor lacinia velit, sit amet volutpat lacus euismod non. Vivamus laoreet malesuada purus, nec porta elit tincidunt sit amet. Praesent orci quam, laoreet in mi non, venenatis congue dui. Suspendisse non lacus eget massa pretium tincidunt id quis justo. Integer velit tortor, ultricies ac.
     </p>
-    <button>
+    <button @click="showFooter = !showFooter" v-if="showFooter" class="collapse">
       Collapse all <span>&#8963;</span>
+    </button>
+    <button @click="showFooter = !showFooter" v-else class="collapse">
+      Show all <span>&or;</span>
     </button>
     <p class="copyright">
       c 2022 PT Global Digital Niaga
@@ -193,6 +197,7 @@ button {
   color: #0095da;
   background: #fff;
   font-size: 20px;
+  font-weight: 700;
   padding: 8px;
   box-shadow: 1px 1px 5px 2px rgb(0 0 0 / 0.2);
 }
@@ -217,5 +222,12 @@ footer {
 
 .copyright {
   margin-top: 80px;
+}
+
+.collapse {
+  background: transparent;
+  border: 0;
+  color: #0095da;
+  font-weight: 600;
 }
 </style>
