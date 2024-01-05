@@ -1,45 +1,25 @@
 <script setup lang="ts">
 import Card from "./components/Card.vue"
-import { onMounted, onUpdated, ref } from "vue"
 
-const items = ref<HTMLElement | null>(null);
-const leftVis = ref(false);
-const rightVis = ref(false);
+//function shouldShowRight() {
+//  const items = document.querySelector(".items");
+//  if (!!items) return 
+//}
 
 function scrollRight(event: MouseEvent) {
   event.preventDefault();
   const items = document.querySelector(".items");
   if (!!items) items.scrollLeft += 30;
-  updateButtonVis();
+  console.log(items.scrollLeft);
 }
 
 function scrollLeft(event: MouseEvent) {
   event.preventDefault();
   const items = document.querySelector(".items");
   if (!!items) items.scrollLeft -= 30;
-  updateButtonVis();
+  const body = document.querySelector("main");
+  console.log(body.offsetWidth);
 }
-
-function updateButtonVis() {
-  if (items.value) {
-    leftVis.value = items.value.scrollLeft > 0;
-    rightVis.value = items.value.scrollLeft < items.value.scrollWidth - items.value.clientWidth;
-  }
-}
-
-function handleScroll() {
-  updateButtonVis();
-}
-
-onMounted(() => {
-  updateButtonVis();
-  items.value?.addEventListener('scroll', handleScroll, { passive: true });
-  items.value?.addEventListener('touchmove', handleScroll, { passive: true });
-});
-
-onUpdated(() => {
-  updateButtonVis();
-});
 </script>
 
 <template>
@@ -64,16 +44,17 @@ onUpdated(() => {
     <section class="four box">
       4
     </section>
+    <p>{{ scroll }}</p>
     <section class="container-items">
       <div class="items" ref="items">
-        <button v-show="leftVis" @click="scrollLeft" class="left scroll-btn">
+        <button @click="scrollLeft" class="left scroll-btn">
           <
         </button>
-        <button v-show="rightVis" @click="scrollRight" class="right scroll-btn">
+        <button @click="scrollRight" class="right scroll-btn">
           >
         </button>
         <Card
-        v-for="i in 7" :key="i"
+        v-for="i in 10" :key="i"
         title="NIKE AJ1 Retro High White University Blue Black"
         img= "/assets/nike.png"
         price=3550000
@@ -124,13 +105,7 @@ main {
   display: flex;
   padding: 12px 12px;
   gap: 12px;
-  overflow-x: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.items::-webkit-scrollbar {
-  display: none;
+  overflow-x: hidden;
 }
 
 .box {
