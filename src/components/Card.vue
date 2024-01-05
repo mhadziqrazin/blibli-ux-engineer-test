@@ -53,7 +53,7 @@ defineProps<{
 
 img {
   max-width: 100%;
-  min-height: 100%;
+  min-height: 50%;
   object-fit: cover;
 }
 
@@ -75,6 +75,7 @@ h1, p {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  background: #fff;
 }
 
 .price-container {
