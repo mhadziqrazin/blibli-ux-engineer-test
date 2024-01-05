@@ -25,6 +25,9 @@ import Card from "./components/Card.vue"
       4
     </section>
     <section class="items">
+      <button>
+        aaa
+      </button>
       <Card
         v-for="i in 20" :key="i"
         title="NIKE AJ1 Retro High White University Blue Black"
